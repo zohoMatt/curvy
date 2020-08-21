@@ -2,22 +2,21 @@ const fs = require('fs-extra');
 const path = require('path');
 
 const TEST_DATA = path.resolve('./test/curves.csv');
-const CURVES_N = 10;
-
 const data = fs.readFileSync(TEST_DATA, { encoding: 'utf-8' });
 const lines = data.split('\n');
 
+const curveN = (lines[0].split(',').length - 2) / 2;
 const actualCurve = [];
-const simCurves = Array(CURVES_N).fill(0).map(_ => []);
+const simCurves = Array(curveN).fill(null).map(_ => []);
 
 for (const line of lines.slice(1)) {
-    const [nv, pilot, _, ...sims]  = line.trim().split(',');
+    const [nv, pilot, ...sims]  = line.trim().split(',');
     if (nv !== '') actualCurve.push([+nv, +pilot]);
-    for (let i = 0; i < CURVES_N; i++) {
+
+    for (let i = 0; i < curveN; i++) {
         simCurves[i].push([+sims[2 * i], +sims[2 * i + 1]]);
     }
 }
-
 
 let minSquareError = Infinity;
 let minIdx = -1;
@@ -28,10 +27,11 @@ for (let i = 0; i < simCurves.length; i++) {
         minSquareError = se;
         minIdx = i;
     }
+    console.log(`The square error of No. ${i} is ${se}.`);
 
 }
 
-console.log(minSquareError, minIdx);
+console.log(`Minimum square error is No. ${minIdx} with ${minSquareError}.`);
 
 function sqaureError(pts, actualPts) {
     const xs = pts.map(p => p[0]);
