@@ -1,16 +1,24 @@
 <template>
     <div class="home">
-        <upload-file></upload-file>
+        <upload-file @uploaded="process"></upload-file>
     </div>
 </template>
 
-<script>
-    import UploadFile from '@/components/UploadFile.vue';
+<script lang="ts">
+    import { Component, Vue } from 'vue-property-decorator';
 
-    export default {
-        name: 'Home',
+    import UploadFile from '@/components/UploadFile.vue';
+    import { readFile } from '@/utils/fileReader';
+
+    @Component({
         components: {
             UploadFile
         }
-    };
+    })
+    export default class Name extends Vue {
+        public async process(file: File) {
+            const content = await readFile(file);
+            console.log(content);
+        }
+    }
 </script>

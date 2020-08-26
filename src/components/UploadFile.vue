@@ -5,10 +5,8 @@
             ref="pond"
             label-idle="Drop files here..."
             accepted-file-types="text/csv"
-            server="/api"
-            :allow-multiple="true"
-            :files="myFiles"
-            @init="handleFilePondInit"
+            :allow-multiple="false"
+            @addfile="addFile"
         />
     </div>
 </template>
@@ -28,8 +26,8 @@
     export default class UploadFile extends Vue {
         public myFiles: string[] = [];
 
-        public handleFilePondInit() {
-            return null;
+        public async addFile(error: any, instance: any) {
+            this.$emit('uploaded', instance.file);
         }
     }
 </script>
