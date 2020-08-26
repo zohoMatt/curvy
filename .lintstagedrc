@@ -1,0 +1,9 @@
+{
+  "{src,tests,public}/**/*.{json,css,less,scss,md}": [
+    "prettier --config ./.prettierrc --write"
+  ],
+  "{src,tests,public}/**/*.{js,ts,tsx,vue}": [
+    "prettier --config ./.prettierrc --write",
+    "yarn run lint:fix"
+  ]
+}
