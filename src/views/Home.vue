@@ -1,18 +1,16 @@
 <template>
     <div class="home">
-        <img alt="Vue logo" src="../assets/logo.png" />
-        <HelloWorld msg="Welcome to Your Vue.js App" />
+        <upload-file></upload-file>
     </div>
 </template>
 
 <script>
-    // @ is an alias to /src
-    import HelloWorld from '@/components/HelloWorld.vue';
+    import UploadFile from '@/components/UploadFile.vue';
 
     export default {
         name: 'Home',
         components: {
-            HelloWorld
+            UploadFile
         }
     };
 </script>
