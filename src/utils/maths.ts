@@ -1,5 +1,5 @@
 import { Point } from '@/utils/types';
-import { binarySearch } from '@/utils/manipulate';
+import { binarySearch } from '@/utils/algorithms';
 
 export function interpolateY(pt1: Point, pt2: Point, x: number) {
     const [x1, y1] = pt1;
@@ -8,7 +8,7 @@ export function interpolateY(pt1: Point, pt2: Point, x: number) {
     return y1 + factor * (y2 - y1);
 }
 
-export function squareErrors(pts: Point[], actualPts: Point[]) {
+export function squareError(pts: Point[], actualPts: Point[]) {
     const xs = pts.map(p => p[0]);
     let accum = 0;
     for (const [px, py] of actualPts) {
