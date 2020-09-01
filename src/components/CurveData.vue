@@ -1,7 +1,7 @@
 <template>
     <div :class="['curve-data', { 'best-fit': bestFit }]">
         <div class="curve-label">{{ curve.label }}</div>
-        <div class="square-error">{{ squareError }}</div>
+        <div class="square-error">{{ squareError.toPrecision(precision) }}</div>
         <div class="best-fit-label">{{ bestFit ? 'Most Curvy' : '' }}</div>
     </div>
 </template>
@@ -22,6 +22,9 @@
 
         @Prop({ type: Boolean })
         public bestFit!: boolean;
+
+        @Prop({ type: Number, default: 4 })
+        public precision!: number;
     }
 </script>
 <style lang="less" scoped>
@@ -29,10 +32,8 @@
         max-width: 66%;
         margin: auto;
 
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
+        display: grid;
+        grid-template-columns: 40% 30% 20%;
     }
 
     .best-fit {
@@ -40,10 +41,5 @@
     }
 
     .best-fit-label {
-        margin-left: 10rem;
-    }
-
-    .curve-label {
-        width: 30%;
     }
 </style>
