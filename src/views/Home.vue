@@ -3,10 +3,12 @@
         <upload-file @uploaded="process"></upload-file>
         <file-info></file-info>
         <curve-data
-            v-for="curve in simCurves"
-            :key="curve.label"
+            v-for="curve in processedCurves"
+            :key="curve.id"
             :actual-curve-points="actualCurvePoints"
             :curve="curve"
+            :square-error="curve.squareError"
+            :best-fit="curve.id === bestFitCurveId"
         ></curve-data>
     </div>
 </template>
@@ -19,6 +21,7 @@
     import FileInfo from '@/components/FileInfo.vue';
     import CurveData from '@/components/CurveData.vue';
     import { Point, SimCurve } from '@/utils/types';
+    import { squareError } from '@/utils/maths';
 
     @Component({
         components: {
@@ -30,6 +33,23 @@
     export default class Name extends Vue {
         public actualCurvePoints: Point[] = [];
         public simCurves: SimCurve[] = [];
+
+        get processedCurves(): SimCurve[] {
+            return this.simCurves.map(curve => ({
+                ...curve,
+                squareError: squareError(curve.points, this.actualCurvePoints).toPrecision(4)
+            }));
+        }
+
+        get bestFitCurveId(): string {
+            return this.processedCurves.reduce(
+                (accu, { id, squareError }) => {
+                    console.log(accu, id, squareError);
+                    return squareError < accu.min ? { id, min: squareError } : accu;
+                },
+                { id: 0, min: Infinity }
+            ).id;
+        }
 
         public async process(file: File) {
             const content = await readFile(file);

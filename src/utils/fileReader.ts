@@ -20,7 +20,7 @@ export function parseData(dataFile: string): Data {
     const actualCurve: Point[] = [];
     const simCurves: SimCurve[] = Array(curveN)
         .fill(null)
-        .map((_, i) => ({ label: `Curve ${i + 1}`, points: [] }));
+        .map((_, i) => ({ id: (i + 1).toString(), label: `Curve ${i + 1}`, points: [] }));
 
     for (const line of lines.slice(1)) {
         const [nv, pilot, ...sims] = line.trim().split(',');
