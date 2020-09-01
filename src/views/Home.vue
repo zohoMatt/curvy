@@ -37,17 +37,16 @@
         get processedCurves(): SimCurve[] {
             return this.simCurves.map(curve => ({
                 ...curve,
-                squareError: squareError(curve.points, this.actualCurvePoints).toPrecision(4)
+                squareError: squareError(curve.points, this.actualCurvePoints)
             }));
         }
 
         get bestFitCurveId(): string {
             return this.processedCurves.reduce(
                 (accu, { id, squareError }) => {
-                    console.log(accu, id, squareError);
-                    return squareError < accu.min ? { id, min: squareError } : accu;
+                    return squareError! < accu.min ? { id, min: squareError! } : accu;
                 },
-                { id: 0, min: Infinity }
+                { id: '', min: Infinity }
             ).id;
         }
 
