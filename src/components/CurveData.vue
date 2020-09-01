@@ -19,7 +19,7 @@
         public actualCurvePoints!: Point[];
 
         get squareErrorResult() {
-            return squareError(this.curve.points, this.actualCurvePoints);
+            return squareError(this.curve.points, this.actualCurvePoints).toPrecision(4);
         }
     }
 </script>
