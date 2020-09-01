@@ -30,7 +30,7 @@
             UploadFile
         }
     })
-    export default class Name extends Vue {
+    export default class Home extends Vue {
         public actualCurvePoints: Point[] = [];
         public simCurves: SimCurve[] = [];
 
